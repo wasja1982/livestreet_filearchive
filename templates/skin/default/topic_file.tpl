@@ -10,6 +10,7 @@
 </div>
 
 
+<a name="download"></a>
 <div style="border: 1px dashed #CDCDCD; margin: 10px 0px; padding: 5px;">
 {if !$oUserCurrent && Config::Get('plugin.filearchive.only_users')}
 	<a href="{router page='registration'}">{$aLang.plugin.filearchive.topic_file_access_denied}</a>

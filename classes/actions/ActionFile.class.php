@@ -247,10 +247,6 @@ class PluginFilearchive_ActionFile extends ActionPlugin {
             $this->Message_AddErrorSingle($this->Lang_Get('plugin.filearchive.topic_file_create_error'),$this->Lang_Get('error'));
             return false;
         }
-        $sFileShort = $this->UploadTopicFile($_FILES['topic_file']);
-        if (!$sFileShort) {
-            return false;
-        }
 
         $oTopic=Engine::GetEntity('Topic');
         $oTopic->_setValidateScenario('file');
@@ -263,10 +259,6 @@ class PluginFilearchive_ActionFile extends ActionPlugin {
         $oTopic->setTags(getRequestStr('topic_tags'));
         $oTopic->setUserId($this->oUserCurrent->getId());
         $oTopic->setType('file');
-        $oTopic->setFilePath($sFileShort);
-        $oTopic->setFileName($_FILES['topic_file']['name']);
-        $oTopic->setFileDownloads(0);
-        $oTopic->setFileSize(@filesize($oTopic->getFilePathFull()));
         $oTopic->setDateAdd(date("Y-m-d H:i:s"));
         $oTopic->setUserIp(func_getIp());
         /**
@@ -305,6 +297,14 @@ class PluginFilearchive_ActionFile extends ActionPlugin {
             $this->Message_AddErrorSingle($this->Lang_Get('topic_time_limit'),$this->Lang_Get('error'));
             return;
         }
+        $sFileShort = $this->UploadTopicFile($_FILES['topic_file']);
+        if (!$sFileShort) {
+            return false;
+        }
+        $oTopic->setFilePath($sFileShort);
+        $oTopic->setFileName($_FILES['topic_file']['name']);
+        $oTopic->setFileDownloads(0);
+        $oTopic->setFileSize(@filesize($oTopic->getFilePathFull()));
         /**
          * Теперь можно смело добавлять топик к блогу
          */

@@ -309,9 +309,13 @@ class PluginFilearchive_ActionFile extends ActionPlugin {
          * Теперь можно смело добавлять топик к блогу
          */
         $oTopic->setBlogId($oBlog->getId());
-        $oTopic->setText($this->Text_Parser($oTopic->getTextSource()));
-        $oTopic->setTextShort($oTopic->getText());
-        $oTopic->setCutText(null);
+        /**
+         * Получаемый и устанавливаем разрезанный текст по тегу <cut>
+         */
+        list($sTextShort,$sTextNew,$sTextCut) = $this->Text_Cut($oTopic->getTextSource());
+        $oTopic->setCutText($sTextCut);
+        $oTopic->setText($this->Text_Parser($sTextNew));
+        $oTopic->setTextShort($this->Text_Parser($sTextShort));
         /**
          * Публикуем или сохраняем
          */
@@ -433,8 +437,13 @@ class PluginFilearchive_ActionFile extends ActionPlugin {
          * Теперь можно смело редактировать топик
          */
         $oTopic->setBlogId($oBlog->getId());
-        $oTopic->setText($this->Text_Parser($oTopic->getTextSource()));
-        $oTopic->setTextShort($oTopic->getText());
+        /**
+         * Получаемый и устанавливаем разрезанный текст по тегу <cut>
+         */
+        list($sTextShort,$sTextNew,$sTextCut) = $this->Text_Cut($oTopic->getTextSource());
+        $oTopic->setCutText($sTextCut);
+        $oTopic->setText($this->Text_Parser($sTextNew));
+        $oTopic->setTextShort($this->Text_Parser($sTextShort));
         /**
          * Был выбран файл с компьютера и он успешно зугрузился?
          */

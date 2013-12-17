@@ -88,7 +88,7 @@ class PluginFilearchive_ActionFile extends ActionPlugin {
         /**
          * Проверяем является ли топик файлом
          */
-        if ($oTopic->getType()!='file') {
+        if (!$oTopic->isFile()) {
             return parent::EventNotFound();
         }
         /**
@@ -124,7 +124,7 @@ class PluginFilearchive_ActionFile extends ActionPlugin {
         /**
          * Проверяем тип топика
          */
-        if ($oTopic->getType()!='file') {
+        if (!$oTopic->isFile()) {
             return parent::EventNotFound();
         }
         /**

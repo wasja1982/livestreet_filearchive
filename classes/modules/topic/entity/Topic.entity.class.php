@@ -30,7 +30,7 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @return null|string
      */
     public function getFileUrl() {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return null;
         }
         $sPath = $this->getFilePath();
@@ -52,7 +52,7 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @return null|string
      */
     public function getFilePath() {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return null;
         }
         return $this->getExtraValue('file_path');
@@ -64,7 +64,7 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @return null|string
      */
     public function getFilePathFull() {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return null;
         }
         return Config::Get('path.root.server') . DIRECTORY_SEPARATOR . $this->getFilePath();
@@ -76,7 +76,7 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @param string $data
      */
     public function setFilePath($data) {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return;
         }
         $this->setExtraValue('file_path',$data);
@@ -88,7 +88,7 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @return null|string
      */
     public function getFileName() {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return null;
         }
         return $this->getExtraValue('file_original_name');
@@ -100,7 +100,7 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @param string $data
      */
     public function setFileName($data) {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return null;
         }
         $this->setExtraValue('file_original_name', $data);
@@ -112,7 +112,7 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @return int|null
      */
     public function getFileDownloads() {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return null;
         }
         return (int)$this->getExtraValue('file_downloads');
@@ -124,7 +124,7 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @param int $data
      */
     public function setFileDownloads($data) {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return;
         }
         $this->setExtraValue('file_downloads',$data);
@@ -136,7 +136,7 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @return int|null
      */
     public function getFileSize() {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return null;
         }
         $iSize = $this->getExtraValue('file_size');
@@ -155,10 +155,20 @@ class PluginFilearchive_ModuleTopic_EntityTopic extends PluginFilearchive_Inheri
      * @param int $data
      */
     public function setFileSize($data) {
-        if ($this->getType()!='file') {
+        if (!$this->isFile()) {
             return;
         }
         $this->setExtraValue('file_size',$data);
     }
+
+    /**
+     * Проверяет, является ли топик файлом
+     *
+     * @return bool
+     */
+    public function isFile() {
+        return $this->getType()=='file';
+    }
+
 }
 ?>

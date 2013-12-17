@@ -15,7 +15,7 @@ class PluginFilearchive_HookFilearchive extends Hook {
         $this->AddHook('template_menu_create_topic_item', 'InjectAddLink');
     }
     public function DeleteFile($aVar) {
-        if (isset($aVar) && isset($aVar['oTopic']) && $aVar['oTopic']->getType()=='file') {
+        if (isset($aVar) && isset($aVar['oTopic']) && $aVar['oTopic']->isFile()) {
             $sFile = $aVar['oTopic']->getFilePathFull();
             @unlink($sFile);
         }

@@ -23,6 +23,12 @@ $config['max_size'] = 1048576; // 1 МБ
 // Доступ к скачиванию только пользователям
 $config['only_users'] = true;
 
+// Использовать ограничение рейтинга для доступа к скачиванию (используется при $config['only_users'] = true).
+$config['use_limit'] = false;
+
+// Порог рейтинга при котором юзер может скачивать топики (используется при $config['only_users'] = true и $config['use_limit'] = true).
+$config['limit_rating'] = 0;
+
 // Разрешенные расширения для файла
 $config['allow_ext'] = array('pdf', 'rar', 'zip');
 

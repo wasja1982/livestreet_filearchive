@@ -74,7 +74,10 @@ class PluginFilearchive_ActionFile extends ActionPlugin {
      *
      */
     protected function EventGo() {
-        if (Config::Get('plugin.filearchive.only_users') && !$this->User_IsAuthorization()) {
+        $bOnlyUsers = Config::Get('plugin.filearchive.only_users');
+        $bUseLimit = Config::Get('plugin.filearchive.use_limit');
+        $iLimitRating = Config::Get('plugin.filearchive.limit_rating');
+        if ($bOnlyUsers && !$this->User_IsAuthorization()) {
             return parent::EventNotFound();
         }
         /**
@@ -91,15 +94,19 @@ class PluginFilearchive_ActionFile extends ActionPlugin {
         if (!$oTopic->isFile()) {
             return parent::EventNotFound();
         }
-        /**
-         * Увеличиваем число скачиваний файла
-         */
-        $oTopic->setFileDownloads($oTopic->getFileDownloads()+1);
-        $this->Topic_UpdateTopic($oTopic);
-        /**
-         * Скачивание файла
-         */
-        Router::Location($oTopic->getFileUrl());
+        if (!$bOnlyUsers || ($bOnlyUsers && $this->oUserCurrent && (!$bUseLimit || ($bUseLimit && ($this->oUserCurrent->getRating()>=$iLimitRating || $this->oUserCurrent->isAdministrator()))))) {
+            /**
+             * Увеличиваем число скачиваний файла
+             */
+            $oTopic->setFileDownloads($oTopic->getFileDownloads()+1);
+            $this->Topic_UpdateTopic($oTopic);
+            /**
+             * Скачивание файла
+             */
+            Router::Location($oTopic->getFileUrl());
+        } else {
+            return parent::EventNotFound();
+        }
     }
 
     /**

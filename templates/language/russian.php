@@ -27,6 +27,7 @@ return array(
     'topic_file_size_error' => 'Превышен допустимый размер файла (%%MAX%% Кб)',
     'topic_file_type_error' => 'Недопустимый тип файла (допустимы %%TYPES%%)',
     'topic_file_access_denied' => 'Скачивать файлы могут только зарегистрированные пользователи.',
+    'topic_file_limit_access_denied' => 'Вашего рейтинга недостаточно для скачивания файлов.',
 
     'topic_file_download' => 'Скачать',
 

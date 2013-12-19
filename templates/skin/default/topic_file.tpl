@@ -28,10 +28,17 @@
 {if !$bTopicList}
 <a name="download"></a>
 <div style="border: 1px dashed #CDCDCD; margin: 10px 0px; padding: 5px;">
-{if !$oUserCurrent && Config::Get('plugin.filearchive.only_users')}
+{assign var="bOnlyUsers" value=Config::Get('plugin.filearchive.only_users')}
+{assign var="bUseLimit" value=Config::Get('plugin.filearchive.use_limit')}
+{assign var="iLimitRating" value=Config::Get('plugin.filearchive.limit_rating')}
+{if !$oUserCurrent && $bOnlyUsers}
 	<a href="{router page='registration'}">{$aLang.plugin.filearchive.topic_file_access_denied}</a>
 {else}
+    {if !$bOnlyUsers || ($bOnlyUsers && $oUserCurrent && (!$bUseLimit || ($bUseLimit && ($oUserCurrent->getRating()>=$iLimitRating || $oUserCurrent->getIsAdministrator()))))}
 	<a href="{$oTopic->getDownloadUrl()}" title="{$aLang.plugin.filearchive.topic_file_downloads}: {$oTopic->getFileDownloads()}">{$aLang.plugin.filearchive.topic_file_download} "{$oTopic->getFileName()}" {($oTopic->getFileSize() / 1024)|string_format:$aLang.plugin.filearchive.topic_file_size}</a>
+    {else}
+	{$aLang.plugin.filearchive.topic_file_limit_access_denied}
+    {/if}
 {/if}
 </div>
 {/if}

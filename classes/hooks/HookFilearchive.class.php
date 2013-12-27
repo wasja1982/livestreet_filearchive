@@ -16,6 +16,9 @@ class PluginFilearchive_HookFilearchive extends Hook {
         if (Config::Get('plugin.filearchive.show_info')) {
             $this->AddHook('template_topic_show_info', 'InjectShowInfo');
         }
+        if (Config::Get('plugin.filearchive.show_write_item')) {
+            $this->AddHook('template_write_item', 'InjectWriteItem');
+        }
     }
     public function DeleteFile($aVar) {
         if (isset($aVar) && isset($aVar['oTopic']) && $aVar['oTopic']->isFile()) {
@@ -39,6 +42,13 @@ class PluginFilearchive_HookFilearchive extends Hook {
                 $this->Viewer_Assign('oTopic', $oTopic);
                 return $this->Viewer_Fetch($sTemplatePath);
             }
+        }
+    }
+
+    public function InjectWriteItem() {
+        $sTemplatePath = Plugin::GetTemplatePath(__CLASS__) . 'inject_write_item.tpl';
+        if ($this->Viewer_TemplateExists($sTemplatePath)) {
+            return $this->Viewer_Fetch($sTemplatePath);
         }
     }
 }

@@ -1,5 +1,9 @@
 {if $sEvent=='add'}
+    {if Config::Get('view.skin') == 'social'}
+	{include file='header.tpl' menu='create'}
+    {else}
 	{include file='header.tpl' menu_content='create'}
+    {/if}
 {else}
 	{include file='header.tpl'}
 	<h2 class="page-header">{$aLang.plugin.filearchive.topic_file_edit}</h2>

@@ -1,5 +1,5 @@
 {if $sEvent=='add'}
-    {if Config::Get('view.skin') == 'social'}
+    {if Config::Get('view.skin') == 'social' || Config::Get('view.skin') == 'mobile'}
 	{include file='header.tpl' menu='create'}
     {else}
 	{include file='header.tpl' menu_content='create'}

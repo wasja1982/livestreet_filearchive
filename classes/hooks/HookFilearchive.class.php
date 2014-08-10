@@ -19,8 +19,11 @@ class PluginFilearchive_HookFilearchive extends Hook {
         if (Config::Get('plugin.filearchive.show_write_item')) {
             $this->AddHook('template_write_item', 'InjectWriteItem');
         }
-        if (class_exists('PluginMainpreview') || class_exists('PluginNiceurl')) {
+        if (class_exists('PluginMainpreview') || class_exists('PluginNiceurl') || class_exists('PluginSkdatedit')) {
             $plugins = $this->Plugin_GetActivePlugins();
+            if (in_array('skdatedit', $plugins)) {
+                $this->AddHook('template_form_add_topic_file_end', 'form_insert', 'PluginSkdatedit_HookSkdatedit');
+            }
             if (in_array('mainpreview', $plugins)) {
                 $this->AddHook('template_form_add_topic_file_end', 'AddTopicPreviewForm', 'PluginMainpreview_HookMain');
             }
